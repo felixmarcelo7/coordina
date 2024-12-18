@@ -1,10 +1,12 @@
 import {FaUser, FaLock} from "react-icons/fa";
+import logo from "../assets/img/logo.png";
+
 
 const LoginPage = () => {
   return (
     <div className="flex items-center w-screen h-screen bg-slate-600 justify-center p-6">
       <div className="w-80 h-auto bg-white p-6 text-center shadow-md rounded-lg">
-        <h1>Coordina</h1>
+        <img src={logo} alt="logo" className="w-24 h-auto mx-auto mb-4"/>
         <form action="#" className="flex flex-col gap-3">
           <div className="flex flex-col gap-1 relative">
             <label htmlFor="user" className="text-left">
