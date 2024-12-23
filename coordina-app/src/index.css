@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("./fonts/Montserrat/Montserrat-Regular.ttf") format("opentype");
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat-bold";
+    src: url("./fonts/Montserrat/Montserrat-Bold.ttf") format("opentype");
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat-light";
+    src: url("./fonts/Montserrat/Montserrat-Light.ttf") format("opentype");
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat-lightItalic";
+    src: url("./fonts/Montserrat/Montserrat-LightItalic.ttf") format("opentype");
+    font-style: normal;
+    font-display: swap;
+}
