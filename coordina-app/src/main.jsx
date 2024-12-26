@@ -6,16 +6,11 @@ import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import LoginPage from "./components/LoginPage.jsx";
-import ForgetPasswordPage from "./components/ForgetPasswordPage.jsx";
 
 const router = createBrowserRouter([
   {
     path: "login",
     element: <LoginPage />,
-  },
-  {
-    path: "forgetpassword",
-    element: <ForgetPasswordPage />,
   },
   {
     path: "/",
