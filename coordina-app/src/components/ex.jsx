@@ -1,4 +1,4 @@
-//exemplo para fazer a mensagem aparecer
+//exemplo para fazer a mensagem aparec
 
 import React, { useState } from 'react';
 
