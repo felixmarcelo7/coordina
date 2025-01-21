@@ -8,16 +8,26 @@ import { useState } from "react";
 const LoginPage = () => {
   const [isLoginVisible, setIsLoginVisible] = useState(true);
   const [isResendVisible, setIsResendVisible] = useState(false);
+  const [isCheckEmailVisible, setIsCheckEmail] = useState(false);
 
-  const handleButtonClick = () => {
+  const changeScreen = () => {
     setIsLoginVisible(false);
     setIsResendVisible(true);
   };
 
-  const backHandleButtonClick = () => {
+  const backScreenLogin = () => {
     setIsLoginVisible(true);
     setIsResendVisible(false);
-  }
+  };
+
+  const changeCheckEmail = () => {
+    setIsCheckEmail(true);
+    setIsResendVisible(false);
+  };
+
+  const reloadPage = () => {
+    window.location.reload();
+  };
 
   return (
     <div className="flex items-center w-screen h-screen bg-violet-400 justify-center p-6">
@@ -64,7 +74,7 @@ const LoginPage = () => {
             </button>
             <Link
               className="text-blue-900 font-montserrat-light"
-              onClick={handleButtonClick}
+              onClick={changeScreen}
             >
               Esqueceu sua senha?
             </Link>
@@ -99,22 +109,22 @@ const LoginPage = () => {
               <button
                 type="button"
                 className="flex w-[100%] justify-center rounded-full px-4 py-2 bg-green-900 text-white hover:bg-green-800 mt-3 font-montserrat-bold"
-                onClick=""
+                onClick={changeCheckEmail}
               >
                 Enviar
               </button>
               <Link
                 className="text-green-900 font-montserrat-light"
-                onClick={backHandleButtonClick}
+                onClick={backScreenLogin}
               >
                 Voltar
               </Link>
             </form>
           </div>
         )}
-        
-        
-          <div className="hidden text-left">
+
+        {isCheckEmailVisible && (
+          <div className="text-left">
             <div className="flex gap-2">
               <IoMdCheckmarkCircleOutline className="text-2xl" />
               <h2 className="font-montserrat-bold text-xl mb-3">
@@ -133,11 +143,14 @@ const LoginPage = () => {
               Não recebeu a mensagem? Verifique se o e-mail está correto ou se
               foi para o spam.
             </p>
-            <button className="flex w-[100%] justify-center rounded-full px-4 py-2 bg-green-900 text-white hover:bg-green-800 mt-3 font-montserrat-bold">
+            <button
+              className="flex w-[100%] justify-center rounded-full px-4 py-2 bg-green-900 text-white hover:bg-green-800 mt-3 font-montserrat-bold"
+              onClick={reloadPage}
+            >
               Voltar para login
             </button>
           </div>
-        
+        )}
       </div>
     </div>
   );
