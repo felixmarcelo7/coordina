@@ -4,6 +4,9 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import logoCoordina from "../assets/img/logo.webp";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 const LoginPage = () => {
   const [isLoginVisible, setIsLoginVisible] = useState(true);
@@ -28,6 +31,12 @@ const LoginPage = () => {
   const reloadPage = () => {
     window.location.reload();
   };
+
+  const schema = yup.object({
+    email: yup.string().required("Campo obrigatório").email("Email inválido"),
+    password: yup.string().required("Campo obrigatório").password()
+
+  })
 
   return (
     <div className="flex items-center w-screen h-screen bg-violet-400 justify-center p-6">
@@ -69,9 +78,12 @@ const LoginPage = () => {
               />
               <FaLock className="absolute top-10 left-2" />
             </div>
-            <button className="flex w-[100%] justify-center rounded-full px-4 py-2 bg-blue-900 text-white hover:bg-blue-800 mt-3 font-montserrat-bold">
-              Entrar
-            </button>
+
+            <input
+              type="submit"
+              value="Entrar"
+              className="flex w-[100%] justify-center rounded-full px-4 py-2 bg-blue-900 text-white hover:bg-blue-800 mt-3 font-montserrat-bold"
+            />
             <Link
               className="text-blue-900 font-montserrat-light"
               onClick={changeScreen}
@@ -106,13 +118,12 @@ const LoginPage = () => {
                 />
                 <MdEmail className="absolute top-10 left-2" />
               </div>
-              <button
-                type="button"
+              <input
+                type="submit"
+                value="Enviar"
                 className="flex w-[100%] justify-center rounded-full px-4 py-2 bg-green-900 text-white hover:bg-green-800 mt-3 font-montserrat-bold"
                 onClick={changeCheckEmail}
-              >
-                Enviar
-              </button>
+              />
               <Link
                 className="text-green-900 font-montserrat-light"
                 onClick={backScreenLogin}
