@@ -1,42 +1,31 @@
 import { FaUser, FaLock } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
-import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import logoCoordina from "../assets/img/logo.webp";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 const LoginPage = () => {
-  const [isLoginVisible, setIsLoginVisible] = useState(true);
-  const [isResendVisible, setIsResendVisible] = useState(false);
-  const [isCheckEmailVisible, setIsCheckEmail] = useState(false);
-
-  const changeScreen = () => {
-    setIsLoginVisible(false);
-    setIsResendVisible(true);
-  };
-
-  const backScreenLogin = () => {
-    setIsLoginVisible(true);
-    setIsResendVisible(false);
-  };
-
-  const changeCheckEmail = () => {
-    setIsCheckEmail(true);
-    setIsResendVisible(false);
-  };
-
-  const reloadPage = () => {
-    window.location.reload();
-  };
 
   const schema = yup.object({
     email: yup.string().required("Campo obrigatório").email("Email inválido"),
-    password: yup.string().required("Campo obrigatório").password()
+    password: yup
+      .string()
+      .required("Campo obrigatório")
+      .min(6, "Mínimo de 6 caracteres"),
+  });
 
-  })
+  const saveData = (data) => {
+    console.log(data);
+  }
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   return (
     <div className="flex items-center w-screen h-screen bg-violet-400 justify-center p-6">
@@ -49,119 +38,58 @@ const LoginPage = () => {
           />
         </h1>
 
-        {isLoginVisible && (
-          <form action="#" className="flex flex-col gap-3">
-            <div className="flex flex-col gap-1 relative">
-              <label htmlFor="user" className="text-left font-montserrat">
-                Usuário
-              </label>
-              <input
-                type="email"
-                id="user"
-                name="email"
-                placeholder="Digite seu e-mail"
-                className="border border-gray-300 rounded-lg pl-7 py-2 hover:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 font-montserrat-light-italic"
-                required
-              />
-              <FaUser className="absolute top-10 left-2" />
-            </div>
-            <div className="flex flex-col gap-1 relative">
-              <label htmlFor="password" className="text-left font-montserrat">
-                Senha
-              </label>
-              <input
-                type="password"
-                id="password"
-                placeholder="Digite sua senha"
-                className="border border-gray-300 rounded-lg pl-7 py-2 hover:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 font-montserrat-light-italic"
-                required
-              />
-              <FaLock className="absolute top-10 left-2" />
-            </div>
-
+        <form
+          onSubmit={handleSubmit(saveData)}
+          action="#"
+          className="flex flex-col gap-3"
+        >
+          <div className="flex flex-col gap-1 relative">
+            <label htmlFor="user" className="text-left font-montserrat">
+              Usuário
+            </label>
             <input
-              type="submit"
-              value="Entrar"
-              className="flex w-[100%] justify-center rounded-full px-4 py-2 bg-blue-900 text-white hover:bg-blue-800 mt-3 font-montserrat-bold"
+              type="email"
+              id="user"
+              name="email"
+              placeholder="Digite seu e-mail"
+              className="border border-gray-300 rounded-lg pl-7 py-2 hover:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 font-montserrat-light-italic"
+              {...register("email")}
             />
-            <Link
-              className="text-blue-900 font-montserrat-light"
-              onClick={changeScreen}
-            >
-              Esqueceu sua senha?
-            </Link>
-          </form>
-        )}
-
-        {isResendVisible && (
-          <div>
-            <div className="mb-4">
-              <h2 className="text-xl font-montserrat-bold">
-                Esqueceu sua senha?
-              </h2>
-              <p className="font-montserrat-light">
-                Redefina sua senha em duas etapas
-              </p>
-            </div>
-            <form action="#" className="flex flex-col gap-3">
-              <div className="flex flex-col gap-1 relative">
-                <label htmlFor="email" className="text-left font-montserrat">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Digite seu e-mail"
-                  className="border border-gray-300 rounded-lg pl-7 py-2 hover:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 font-montserrat-light-italic"
-                  required
-                />
-                <MdEmail className="absolute top-10 left-2" />
-              </div>
-              <input
-                type="submit"
-                value="Enviar"
-                className="flex w-[100%] justify-center rounded-full px-4 py-2 bg-green-900 text-white hover:bg-green-800 mt-3 font-montserrat-bold"
-                onClick={changeCheckEmail}
-              />
-              <Link
-                className="text-green-900 font-montserrat-light"
-                onClick={backScreenLogin}
-              >
-                Voltar
-              </Link>
-            </form>
+            {errors?.email && (
+              <span className="text-red-500 text-left font-montserrat-light-italic text-sm">
+                {errors?.email?.message}
+              </span>
+            )}
+            <FaUser className="absolute top-10 left-2" />
           </div>
-        )}
-
-        {isCheckEmailVisible && (
-          <div className="text-left">
-            <div className="flex gap-2">
-              <IoMdCheckmarkCircleOutline className="text-2xl" />
-              <h2 className="font-montserrat-bold text-xl mb-3">
-                Email enviado!
-              </h2>
-            </div>
-            <p className="font-montserrat-light font-semibold">
-              Se o e-mail estiver registrado com XXXXX, você receberá uma
-              mensagem com instruções para definir uma nova senha.
-            </p>
-            <hr
-              className="my-6"
-              style={{ backgroundColor: "gray", height: "2px" }}
+          <div className="flex flex-col gap-1 relative">
+            <label htmlFor="password" className="text-left font-montserrat">
+              Senha
+            </label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Digite sua senha"
+              className="border border-gray-300 rounded-lg pl-7 py-2 hover:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 font-montserrat-light-italic"
+              {...register("password")}
             />
-            <p className="font-montserrat-light text-sm">
-              Não recebeu a mensagem? Verifique se o e-mail está correto ou se
-              foi para o spam.
-            </p>
-            <button
-              className="flex w-[100%] justify-center rounded-full px-4 py-2 bg-green-900 text-white hover:bg-green-800 mt-3 font-montserrat-bold"
-              onClick={reloadPage}
-            >
-              Voltar para login
-            </button>
+            {errors?.password && (
+              <span className="text-red-500 text-left font-montserrat-light-italic text-sm">
+                {errors?.password?.message}
+              </span>
+            )}
+            <FaLock className="absolute top-10 left-2" />
           </div>
-        )}
+
+          <input
+            type="submit"
+            value="Entrar"
+            className="flex w-[100%] justify-center rounded-full px-4 py-2 bg-blue-900 text-white hover:bg-blue-800 mt-3 font-montserrat-bold"
+          />
+          <Link to={"/resend"} className="text-blue-900 font-montserrat-light">
+            Esqueceu sua senha?
+          </Link>
+        </form>
       </div>
     </div>
   );

@@ -6,11 +6,16 @@ import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import LoginPage from "./components/LoginPage.jsx";
+import ResendPage from "./components/ResendPage.jsx";
 
 const router = createBrowserRouter([
   {
     path: "login",
     element: <LoginPage />,
+  },
+  {
+    path: "resend",
+    element: <ResendPage />,
   },
   {
     path: "/",
